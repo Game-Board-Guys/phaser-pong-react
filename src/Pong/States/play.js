@@ -10,59 +10,16 @@ export default function playState() {
 
     var score1;
     var score2;
-    // function createPaddle(x, y) {
-    //     var paddle = this.game.add.sprite(x, y, 'paddle');
-    //     paddle.anchor.setTo(0.5, 0.5);
-    //     this.game.physics.arcade.enable(paddle);
-    //     paddle.body.collideWorldBounds = true;
-    //     paddle.body.immovable = true;
-    //     paddle.scale.setTo(0.4, 0.4)
-
-    //     return paddle;
-    // }
-
-    // /* used to control paddle */
-    // function controlPaddle(paddle, y) {
-    //     paddle.y = y;
-
-    //     if (paddle.y < paddle.height / 2) {
-    //         paddle.y = paddle.height / 2;
-    //     } else if (paddle.y > this.game.world.height - paddle.height / 2) {
-    //         paddle.y = this.game.world.height - paddle.height / 2;
-    //     }
-    // }
-    // /* used to make the ball*/
-    // function createBall(x, y) {
-    //     var ball = this.game.add.sprite(x, y, 'ball');
-    //     ball.anchor.setTo(0.5, 0.5);
-    //     this.game.physics.arcade.enable(ball);
-    //     ball.body.collideWorldBounds = true;
-    //     ball.body.bounce.setTo(1, 1);
-
-    //     return ball;
-    // }
-    // function launchBall() {
-    //     if (ballLaunched) {
-    //         ball.x = this.game.world.centerX;
-    //         ball.y = this.game.world.centerY;
-    //         ball.body.velocity.setTo(0, 0);
-    //         ballLaunched = false;
-    //     } else {
-    //         ball.body.velocity.x = -ballVelocity;
-    //         ball.body.velocity.y = ballVelocity;
-    //         ballLaunched = true;
-    //     }
-    // }
     return {
         create: function () {
             ballLaunched = false;
             ballVelocity = 400;
-            
+
             paddle1 = this.createPaddle(0, this.game.world.centerY)
             paddle2 = this.createPaddle(this.game.world.width - 8, this.game.world.centerY)
             ball = this.createBall(this.game.world.centerX, this.game.world.centerY);
 
-           this.launchBall();
+            this.launchBall();
 
 
             score1 = 0;
@@ -97,10 +54,18 @@ export default function playState() {
             paddle2.body.velocity.setTo(ball.body.velocity.y);
             paddle2.body.velocity.x = 0;
             paddle2.body.maxVelocity.y = 100;
+            if (score1 === 11) {
+                this.Win();
+            } else if (score2 === 11) {
+                this.Lose();
+            }
 
         },
-        End: function () {
-            this.game.state.start('end');
+        Win: function () {
+            this.game.state.start('win');
+        },
+        Lose: function () {
+            this.game.state.start('lose');
         },
         createPaddle: function (x, y) {
             var paddle = this.game.add.sprite(x, y, 'paddle');
