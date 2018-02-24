@@ -9,7 +9,7 @@ class App extends Component {
     // game();
     Pong();
     return (
-      <div className="App">
+      <div id="myCanvas">
 
       </div>
     );
